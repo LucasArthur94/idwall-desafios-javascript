@@ -26,8 +26,27 @@
  * }
  */
 
-const extractSize = htmlTemplate => {}
+const MEASURE_REGEX = `[\\s]*:[\\s]*[0-9]+(px|%|em)`
 
-module.exports = extractSize;
+const getMeasure = (htmlTemplate, rule) => {
+  const regexRule = new RegExp(`${rule}${MEASURE_REGEX}`)
 
+  const results = htmlTemplate.match(regexRule)
 
+  const firstResult = results && results.length ? results[0] : ''
+
+  if (!firstResult) return 0
+
+  const [_dimension, value] = firstResult.split(':')
+
+  return Number(value.match(/[0-9]+/)[0])
+}
+
+const extractSize = (htmlTemplate) => {
+  return {
+    width: getMeasure(htmlTemplate, 'width'),
+    height: getMeasure(htmlTemplate, 'height'),
+  }
+}
+
+module.exports = extractSize

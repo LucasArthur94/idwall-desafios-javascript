@@ -52,6 +52,38 @@
  *  }
  */
 
-const normalizeData = unormalized => {}
+// Typescript cairia bem aqui nesse challenge rs
+const normalizeData = (unormalized) => {
+  const resultId = unormalized.id
+  const userId = unormalized.user.id
+  const processedReports = unormalized.reports.reduce(
+    (allReports, report) => ({
+      ...allReports,
+      ...{
+        [report.id]: {
+          id: report.id,
+          user: userId,
+          document: report.result.document,
+          status: report.result.status,
+        },
+      },
+    }),
+    {},
+  )
+
+  return {
+    results: {
+      [resultId]: {
+        id: resultId,
+        user: userId,
+        reports: Object.keys(processedReports),
+      },
+    },
+    users: {
+      [userId]: unormalized.user,
+    },
+    reports: processedReports,
+  }
+}
 
 module.exports = normalizeData

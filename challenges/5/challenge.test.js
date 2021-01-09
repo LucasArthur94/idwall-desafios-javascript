@@ -45,12 +45,21 @@ describe('Challenge 5', () => {
     expect(results.totalPages).toEqual(7)
   })
 
-  it('should return 3 items at second page', () => {
+  it('should return 10 items at second page', () => {
     const results = paginate(collection, 3, 10)
     expect(results.currentPage).toEqual(3)
     expect(results.perPage).toEqual(10)
     expect(results.total).toEqual(100)
     expect(results.totalPages).toEqual(10)
     expect(results.data).toEqual(collection.slice(20, 30))
+  })
+
+  it('should return 10 items at last page', () => {
+    const results = paginate(collection, 7, 15)
+    expect(results.currentPage).toEqual(7)
+    expect(results.perPage).toEqual(15)
+    expect(results.total).toEqual(100)
+    expect(results.totalPages).toEqual(7)
+    expect(results.data).toEqual(collection.slice(90, 115))
   })
 })

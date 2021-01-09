@@ -36,7 +36,7 @@ const paginate = (posts, pageNumber = 1, itemsPerPage = 10) => {
 
   return {
     currentPage: pageNumber,
-    perPage: dataSubset.length,
+    perPage: itemsPerPage,
     total: posts.length,
     totalPages,
     data: dataSubset,
